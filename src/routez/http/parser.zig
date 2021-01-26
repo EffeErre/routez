@@ -124,7 +124,7 @@ test "parse headers" {
         .stack = undefined,
         .writer = undefined,
         .server = undefined,
-        .file = undefined,
+        .stream = undefined,
         .frame = undefined,
         .node = undefined,
     };
@@ -159,7 +159,7 @@ test "HTTP/0.9" {
         .stack = undefined,
         .writer = undefined,
         .server = undefined,
-        .file = undefined,
+        .stream = undefined,
         .frame = undefined,
         .node = undefined,
     };
@@ -186,7 +186,7 @@ test "HTTP/1.1" {
         .stack = undefined,
         .writer = undefined,
         .server = undefined,
-        .file = undefined,
+        .stream = undefined,
         .frame = undefined,
         .node = undefined,
     };
@@ -213,7 +213,7 @@ test "HTTP/3.0" {
         .stack = undefined,
         .writer = undefined,
         .server = undefined,
-        .file = undefined,
+        .stream = undefined,
         .frame = undefined,
         .node = undefined,
     };

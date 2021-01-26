@@ -128,6 +128,10 @@ pub fn match(
                     state = .Path;
                     index += 1;
                 },
+                '*' => {
+                    state = .Path;
+                    break;
+                },
                 else => @compileError("route must begin with a '/'"),
             },
             .Path => switch (c) {
@@ -302,7 +306,7 @@ pub fn match(
         }
     };
     const r = pathbuf[begin..index];
-    if (!mem.eql(u8, r, path[path_index..])) {
+    if (route.path[0] != '*' and !mem.eql(u8, r, path[path_index..])) {
         return false;
     }
     if (route.method) |m| {
@@ -350,7 +354,7 @@ fn verifyField(comptime field: type, number: *bool) void {
 }
 
 fn getNum(comptime T: type, path: []const u8, radix: u8, len: *usize) T {
-    const signed = @typeInfo(T).Int.is_signed;
+    const signed = @typeInfo(T).Int.signedness == .signed;
     var sign = if (signed) false;
     var res: T = 0;
     for (path) |c, i| {
