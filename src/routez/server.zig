@@ -121,6 +121,7 @@ pub const Server = struct {
                 error.Unexpected,
                 error.ConnectionResetByPeer,
                 error.NetworkSubsystemFailed,
+                error.PermissionDenied,
                 => continue,
                 error.BlockedByFirewall => |e| return e,
                 error.FileDescriptorNotASocket,
@@ -190,6 +191,7 @@ pub const Server = struct {
                 await frame catch |e| {
                     try defaultErrorHandler(e, &req, &res);
                 };
+                std.debug.print("{} - {} - {}\n", .{ req.method, req.path, res.status_code });
             } else |e| {
                 try defaultErrorHandler(e, &req, &res);
                 try writeResponse(ctx.server, ctx.writer.writer(), &req, &res);
