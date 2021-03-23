@@ -121,7 +121,6 @@ pub const Server = struct {
                 error.Unexpected,
                 error.ConnectionResetByPeer,
                 error.NetworkSubsystemFailed,
-                error.PermissionDenied,
                 => continue,
                 error.BlockedByFirewall => |e| return e,
                 error.FileDescriptorNotASocket,
@@ -147,7 +146,7 @@ pub const Server = struct {
         defer context.server.discards.push(&context.node);
 
         const up = handleHttp(context) catch |e| {
-            std.debug.warn("error in http handler: {}\n", .{e});
+            std.debug.warn("error in http handler: {s}\n", .{e});
             return;
         };
 
@@ -191,7 +190,7 @@ pub const Server = struct {
                 await frame catch |e| {
                     try defaultErrorHandler(e, &req, &res);
                 };
-                std.debug.print("{} - {} - {}\n", .{ req.method, req.path, res.status_code });
+                std.debug.print("{s} - {s} - {s}\n", .{ req.method, req.path, res.status_code });
             } else |e| {
                 try defaultErrorHandler(e, &req, &res);
                 try writeResponse(ctx.server, ctx.writer.writer(), &req, &res);

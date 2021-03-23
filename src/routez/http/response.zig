@@ -31,7 +31,7 @@ pub const Response = struct {
         });
         defer in_file.close();
 
-        const content = in_file.reader().readAllAlloc(res.allocator, 1024 * 1024) catch |err| switch (err) {
+        const content = in_file.reader().readAllAlloc(res.allocator, 1024 * 1024 * 4) catch |err| switch (err) {
             error.OutOfMemory => |e| return e,
             else => return error.SystemError,
         };
